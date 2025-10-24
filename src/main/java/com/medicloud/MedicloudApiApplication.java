@@ -45,6 +45,17 @@ public class MedicloudApiApplication {
                 userRepository.save(doctor);
                 System.out.println("--- TEST DOCTOR CREATED (ID: " + doctor.getId() + ") ---");
             }
+            if (userRepository.findByEmail("admin@medicloud.com").isEmpty()) {
+                System.out.println("--- CREATING TEST ADMIN ---");
+                User admin = new User();
+                admin.setEmail("admin@medicloud.com");
+                admin.setPassword(passwordEncoder.encode("password123"));
+                admin.setFirstName("Admin");
+                admin.setLastName("User");
+                admin.setRoles(Set.of(Role.ROLE_ADMIN, Role.ROLE_STAFF)); // Give them all roles
+                userRepository.save(admin);
+                System.out.println("--- TEST ADMIN CREATED (ID: " + admin.getId() + ") ---");
+            }
         };
     }
     // --- END OF NEW CODE BLOCK ---
