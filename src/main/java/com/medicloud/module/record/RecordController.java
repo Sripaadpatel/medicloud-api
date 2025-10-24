@@ -8,7 +8,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import com.medicloud.module.user.model.User; // Assuming User implements UserDetails
+import org.springframework.security.access.AccessDeniedException; // For throwing 403
 import java.util.List;
 
 @RestController
@@ -35,14 +38,20 @@ public class RecordController {
      */
     @GetMapping("/{recordId}")
     @PreAuthorize("hasAnyRole('PATIENT', 'DOCTOR', 'ADMIN')")
-    public ResponseEntity<RecordResponseDTO> getRecordById(@PathVariable Long recordId) {
+    public ResponseEntity<RecordResponseDTO> getRecordById(
+            @PathVariable Long recordId, Authentication authentication) { // <-- Inject Authentication
 
-        // TODO: Add security check:
-        // 1. Get the logged-in user's details.
-        // 2. If user is PATIENT, check that record.patientId == loggedInUser.id
+        // --- TODO IMPLEMENTED ---
+        User currentUser = (User) authentication.getPrincipal();
+        RecordResponseDTO record = recordService.getRecordById(recordId); // Fetch the record first
+        // If the user is a PATIENT, check if they own this record
+        if (currentUser.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_PATIENT"))
+                && !record.getPatientId().equals(currentUser.getId())) {
+            throw new AccessDeniedException("Patients can only view their own medical records.");
+        }
+        // --- END OF IMPLEMENTATION ---
 
-        RecordResponseDTO record = recordService.getRecordById(recordId);
-        return ResponseEntity.ok(record);
+        return ResponseEntity.ok(record); // Return the fetched record
     }
 
     /**
@@ -51,11 +60,17 @@ public class RecordController {
      */
     @GetMapping("/patient/{patientId}")
     @PreAuthorize("hasAnyRole('PATIENT', 'DOCTOR', 'ADMIN')")
-    public ResponseEntity<List<RecordResponseDTO>> getRecordsForPatient(@PathVariable Long patientId) {
+    public ResponseEntity<List<RecordResponseDTO>> getRecordsForPatient(
+            @PathVariable Long patientId, Authentication authentication) { // <-- Inject Authentication
 
-        // TODO: Add security check:
-        // 1. Get the logged-in user's details.
-        // 2. If user is PATIENT, check that patientId == loggedInUser.id
+        // --- TODO IMPLEMENTED ---
+        User currentUser = (User) authentication.getPrincipal();
+        // If the user is a PATIENT, check if they are requesting their own records
+        if (currentUser.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_PATIENT"))
+                && !currentUser.getId().equals(patientId)) {
+            throw new AccessDeniedException("Patients can only view their own medical records.");
+        }
+        // --- END OF IMPLEMENTATION ---
 
         List<RecordResponseDTO> records = recordService.getRecordsForPatient(patientId);
         return ResponseEntity.ok(records);

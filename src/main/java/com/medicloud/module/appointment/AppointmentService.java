@@ -59,7 +59,12 @@ public class AppointmentService {
         List<Appointment> appointments = appointmentRepository.findByPatientId(patientId);
         return appointments.stream().map(this::convertToDTO).collect(Collectors.toList());
     }
-
+    @Transactional(readOnly = true) // Add this method
+    public AppointmentResponseDTO getAppointmentById(Long appointmentId) {
+        Appointment appointment = appointmentRepository.findById(appointmentId)
+                .orElseThrow(() -> new ResourceNotFoundException("Appointment", "id", appointmentId));
+        return convertToDTO(appointment);
+    }
     @Transactional(readOnly = true)
     public List<AppointmentResponseDTO> getAppointmentsByDoctor(Long doctorId) {
         List<Appointment> appointments = appointmentRepository.findByDoctorId(doctorId);

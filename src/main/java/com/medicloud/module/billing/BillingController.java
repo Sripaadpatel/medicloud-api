@@ -2,12 +2,21 @@ package com.medicloud.module.billing;
 
 import com.medicloud.module.billing.dto.InvoiceCreateDTO;
 import com.medicloud.module.billing.dto.InvoiceResponseDTO;
+import com.medicloud.module.user.model.User;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.security.core.Authentication;
+// Add this import if you haven't already for the User class
+import com.medicloud.module.user.model.User;
+// Add this import for the security check
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+// Add this import for throwing 403
+import org.springframework.security.access.AccessDeniedException;
+import com.medicloud.module.billing.dto.PaymentRequestDTO;
 
 import java.util.List;
 
@@ -48,5 +57,24 @@ public class BillingController {
 
     // TODO: Add the payment processing endpoint
     // @PostMapping("/payments")
+    // --- TODO IMPLEMENTED ---
+    /**
+     * Processes a payment for a specific invoice. (SRS 4.4)
+     */
+    @PostMapping("/payments")
+    @PreAuthorize("hasAnyRole('PATIENT', 'ADMIN', 'STAFF')") // Allow patients to pay
+    public ResponseEntity<InvoiceResponseDTO> processPayment(@Valid @RequestBody PaymentRequestDTO paymentDTO, Authentication authentication) {
+        // Add security check: If user is PATIENT, ensure they own the invoice
+        User currentUser = (User) authentication.getPrincipal();
+        if (currentUser.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_PATIENT"))) {
+            InvoiceResponseDTO invoice = billingService.getInvoiceById(paymentDTO.getInvoiceId());
+            if (!invoice.getPatientId().equals(currentUser.getId())) {
+                throw new AccessDeniedException("Patients can only pay their own invoices.");
+            }
+        }
+
+        InvoiceResponseDTO updatedInvoice = billingService.processPayment(paymentDTO);
+        return ResponseEntity.ok(updatedInvoice);
+    }
     // public ResponseEntity<?> processPayment(...) { ... }
 }
