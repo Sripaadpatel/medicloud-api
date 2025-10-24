@@ -9,6 +9,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import com.medicloud.module.user.model.User;
+import org.springframework.security.access.AccessDeniedException;
 import java.util.List;
 
 @RestController
@@ -36,9 +40,16 @@ public class AppointmentController {
     @GetMapping("/patient/{patientId}")
     @PreAuthorize("hasAnyRole('PATIENT', 'DOCTOR', 'ADMIN')")
     public ResponseEntity<List<AppointmentResponseDTO>> getAppointmentsForPatient(
-            @PathVariable Long patientId) {
+            @PathVariable Long patientId, Authentication authentication) { // <-- Inject Authentication
 
-        // TODO: Add a check to ensure a PATIENT can only see their *own* appointments
+        // --- TODO IMPLEMENTED ---
+        User currentUser = (User) authentication.getPrincipal();
+        // If the logged-in user is a PATIENT, they can only access their own appointments
+        if (currentUser.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_PATIENT"))
+                && !currentUser.getId().equals(patientId)) {
+            throw new AccessDeniedException("Patients can only view their own appointments.");
+        }
+        // --- END OF IMPLEMENTATION ---
 
         List<AppointmentResponseDTO> appointments = appointmentService.getAppointmentsByPatient(patientId);
         return ResponseEntity.ok(appointments);
@@ -61,9 +72,20 @@ public class AppointmentController {
      */
     @DeleteMapping("/{appointmentId}")
     @PreAuthorize("hasAnyRole('PATIENT', 'STAFF', 'ADMIN')")
-    public ResponseEntity<Void> cancelAppointment(@PathVariable Long appointmentId) {
+    public ResponseEntity<Void> cancelAppointment(
+            @PathVariable Long appointmentId, Authentication authentication) { // <-- Inject Authentication
 
-        // TODO: Add a check to ensure a PATIENT can only cancel their *own* appointment
+        // --- TODO IMPLEMENTED ---
+        User currentUser = (User) authentication.getPrincipal();
+        // If the logged-in user is a PATIENT, they can only cancel their own appointments
+        // (We need to fetch the appointment first to check its patientId)
+        if (currentUser.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_PATIENT"))) {
+            AppointmentResponseDTO appointment = appointmentService.getAppointmentById(appointmentId); // You'll need to add this method to the service
+            if (!appointment.getPatientId().equals(currentUser.getId())) {
+                throw new AccessDeniedException("Patients can only cancel their own appointments.");
+            }
+        }
+        // --- END OF IMPLEMENTATION ---
 
         appointmentService.cancelAppointment(appointmentId);
         return ResponseEntity.noContent().build();

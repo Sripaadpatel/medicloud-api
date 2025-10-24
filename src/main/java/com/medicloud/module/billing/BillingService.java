@@ -9,8 +9,13 @@ import com.medicloud.module.billing.repository.InvoiceRepository;
 import com.medicloud.module.user.model.User;
 import com.medicloud.module.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.medicloud.module.billing.dto.PaymentRequestDTO; // Add this
+import com.medicloud.shared.payment.PaymentGatewayService;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -18,9 +23,10 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class BillingService {
-
+    private static final Logger logger = LoggerFactory.getLogger(BillingService.class);
     private final InvoiceRepository invoiceRepository;
     private final UserRepository userRepository;
+    private final PaymentGatewayService paymentGatewayService;
     // In a real app, you would also inject a PaymentGatewayService here
 
     @Transactional
@@ -59,7 +65,44 @@ public class BillingService {
 
     // TODO: Add a method to process payments (SRS 4.4)
     // public InvoiceResponseDTO processPayment(Long invoiceId, PaymentRequestDTO dto) { ... }
+    @Transactional
+    public InvoiceResponseDTO processPayment(PaymentRequestDTO dto) {
+        Invoice invoice = invoiceRepository.findById(dto.getInvoiceId())
+                .orElseThrow(() -> new ResourceNotFoundException("Invoice", "id", dto.getInvoiceId()));
 
+        if (invoice.getStatus() == InvoiceStatus.PAID) {
+            throw new RuntimeException("Invoice is already paid.");
+        }
+
+        // Verify amount if needed
+        if (dto.getAmount() != null && dto.getAmount().compareTo(invoice.getAmount()) != 0) {
+            throw new RuntimeException("Payment amount does not match invoice amount.");
+        }
+
+        try {
+            // Call the payment gateway
+            String transactionId = paymentGatewayService.processPayment(
+                    dto.getPaymentMethodNonce(),
+                    invoice.getAmount(), // Use the actual invoice amount
+                    "USD" // Get currency from config or invoice
+            );
+
+            // Update invoice status on success
+            invoice.setStatus(InvoiceStatus.PAID);
+            // Optionally store transactionId on the invoice
+            Invoice updatedInvoice = invoiceRepository.save(invoice);
+
+            // Send receipt (optional)
+            // emailService.sendPaymentReceipt(...)
+
+            return convertToDTO(updatedInvoice);
+
+        } catch (Exception e) {
+            logger.error("Payment processing failed for invoice {}: {}", invoice.getId(), e.getMessage());
+            // Don't change invoice status, re-throw or handle error
+            throw new RuntimeException("Payment processing failed: " + e.getMessage(), e);
+        }
+    }
     // --- Helper Method to convert Entity to DTO ---
     private InvoiceResponseDTO convertToDTO(Invoice invoice) {
         InvoiceResponseDTO dto = new InvoiceResponseDTO();
@@ -75,5 +118,6 @@ public class BillingService {
             dto.setPatientName(invoice.getPatient().getFirstName() + " " + invoice.getPatient().getLastName());
         }
         return dto;
+
     }
 }

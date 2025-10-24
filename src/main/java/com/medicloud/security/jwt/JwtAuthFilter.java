@@ -14,13 +14,14 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
-
+import org.slf4j.Logger; // Add this
+import org.slf4j.LoggerFactory;
 import java.io.IOException;
 
 @Component
 @RequiredArgsConstructor
 public class JwtAuthFilter extends OncePerRequestFilter {
-
+    private static final Logger logger = LoggerFactory.getLogger(JwtAuthFilter.class);
     private final JwtTokenProvider jwtTokenProvider;
     private final UserDetailsServiceImpl userDetailsService;
 
