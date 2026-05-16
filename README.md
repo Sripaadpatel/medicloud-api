@@ -1,92 +1,9 @@
 <div align="center">
 
 <!-- BANNER -->
-<svg viewBox="0 0 900 280" xmlns="http://www.w3.org/2000/svg" width="900" height="280" style="border-radius:16px">
-  <defs>
-    <linearGradient id="bgGrad" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#060d1a"/>
-      <stop offset="50%" stop-color="#0b1f3a"/>
-      <stop offset="100%" stop-color="#071225"/>
-    </linearGradient>
-    <linearGradient id="titleGrad" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0%" stop-color="#7dd3fc"/>
-      <stop offset="45%" stop-color="#34d399"/>
-      <stop offset="100%" stop-color="#a78bfa"/>
-    </linearGradient>
-    <linearGradient id="crossGrad" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#38bdf8"/>
-      <stop offset="100%" stop-color="#34d399"/>
-    </linearGradient>
-    <linearGradient id="lineGrad" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0%" stop-color="#38bdf8" stop-opacity="0"/>
-      <stop offset="30%" stop-color="#38bdf8" stop-opacity="0.7"/>
-      <stop offset="70%" stop-color="#34d399" stop-opacity="0.7"/>
-      <stop offset="100%" stop-color="#a78bfa" stop-opacity="0"/>
-    </linearGradient>
-    <linearGradient id="ringGrad1" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.25"/>
-      <stop offset="100%" stop-color="#38bdf8" stop-opacity="0"/>
-    </linearGradient>
-    <linearGradient id="ringGrad2" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#34d399" stop-opacity="0.18"/>
-      <stop offset="100%" stop-color="#34d399" stop-opacity="0"/>
-    </linearGradient>
-    <clipPath id="bannerClip">
-      <rect width="900" height="280" rx="16"/>
-    </clipPath>
-  </defs>
-  <rect width="900" height="280" rx="16" fill="url(#bgGrad)"/>
-  <g clip-path="url(#bannerClip)">
-    <g fill="#ffffff" opacity="0.035">
-      <circle cx="60" cy="40" r="1.2"/><circle cx="120" cy="40" r="1.2"/><circle cx="180" cy="40" r="1.2"/><circle cx="240" cy="40" r="1.2"/><circle cx="300" cy="40" r="1.2"/><circle cx="360" cy="40" r="1.2"/><circle cx="420" cy="40" r="1.2"/><circle cx="480" cy="40" r="1.2"/><circle cx="540" cy="40" r="1.2"/><circle cx="600" cy="40" r="1.2"/><circle cx="660" cy="40" r="1.2"/><circle cx="720" cy="40" r="1.2"/><circle cx="780" cy="40" r="1.2"/><circle cx="840" cy="40" r="1.2"/>
-      <circle cx="60" cy="100" r="1.2"/><circle cx="120" cy="100" r="1.2"/><circle cx="180" cy="100" r="1.2"/><circle cx="240" cy="100" r="1.2"/><circle cx="300" cy="100" r="1.2"/><circle cx="360" cy="100" r="1.2"/><circle cx="420" cy="100" r="1.2"/><circle cx="480" cy="100" r="1.2"/><circle cx="540" cy="100" r="1.2"/><circle cx="600" cy="100" r="1.2"/><circle cx="660" cy="100" r="1.2"/><circle cx="720" cy="100" r="1.2"/><circle cx="780" cy="100" r="1.2"/><circle cx="840" cy="100" r="1.2"/>
-      <circle cx="60" cy="160" r="1.2"/><circle cx="120" cy="160" r="1.2"/><circle cx="180" cy="160" r="1.2"/><circle cx="240" cy="160" r="1.2"/><circle cx="300" cy="160" r="1.2"/><circle cx="360" cy="160" r="1.2"/><circle cx="420" cy="160" r="1.2"/><circle cx="480" cy="160" r="1.2"/><circle cx="540" cy="160" r="1.2"/><circle cx="600" cy="160" r="1.2"/><circle cx="660" cy="160" r="1.2"/><circle cx="720" cy="160" r="1.2"/><circle cx="780" cy="160" r="1.2"/><circle cx="840" cy="160" r="1.2"/>
-      <circle cx="60" cy="220" r="1.2"/><circle cx="120" cy="220" r="1.2"/><circle cx="180" cy="220" r="1.2"/><circle cx="240" cy="220" r="1.2"/><circle cx="300" cy="220" r="1.2"/><circle cx="360" cy="220" r="1.2"/><circle cx="420" cy="220" r="1.2"/><circle cx="480" cy="220" r="1.2"/><circle cx="540" cy="220" r="1.2"/><circle cx="600" cy="220" r="1.2"/><circle cx="660" cy="220" r="1.2"/><circle cx="720" cy="220" r="1.2"/><circle cx="780" cy="220" r="1.2"/><circle cx="840" cy="220" r="1.2"/>
-    </g>
-    <circle cx="810" cy="50" r="120" fill="none" stroke="url(#ringGrad1)" stroke-width="60" opacity="0.5"/>
-    <circle cx="810" cy="50" r="75" fill="none" stroke="url(#ringGrad2)" stroke-width="30" opacity="0.5"/>
-    <circle cx="90" cy="240" r="100" fill="none" stroke="#38bdf8" stroke-width="40" opacity="0.04"/>
-    <circle cx="90" cy="240" r="60" fill="none" stroke="#34d399" stroke-width="20" opacity="0.05"/>
-    <polyline fill="none" stroke="url(#lineGrad)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" opacity="0.9"
-      points="0,195 80,195 100,195 115,155 128,228 140,172 152,195 260,195 280,195 295,150 308,232 320,168 332,195 445,195 465,195 480,148 493,235 505,165 517,195 630,195 650,195 665,153 678,229 690,170 702,195 820,195 840,195 855,152 868,230 880,167 892,195 900,195"/>
-    <circle cx="108" cy="115" r="52" fill="#38bdf8" opacity="0.06"/>
-    <circle cx="108" cy="115" r="42" fill="#38bdf8" opacity="0.06"/>
-    <rect x="72" y="79" width="72" height="72" rx="18" fill="#0f2744"/>
-    <rect x="72" y="79" width="72" height="72" rx="18" fill="none" stroke="#38bdf8" stroke-width="1" opacity="0.3"/>
-    <rect x="99" y="88" width="18" height="54" rx="5" fill="url(#crossGrad)"/>
-    <rect x="82" y="105" width="52" height="18" rx="5" fill="url(#crossGrad)"/>
-    <text x="204" y="110" font-family="'Segoe UI', system-ui, -apple-system, sans-serif" font-size="58" font-weight="800" fill="url(#titleGrad)" letter-spacing="-2">MediCloud API</text>
-    <rect x="204" y="124" width="580" height="1.5" rx="1" fill="url(#lineGrad)" opacity="0.5"/>
-    <text x="206" y="155" font-family="'Segoe UI', system-ui, -apple-system, sans-serif" font-size="15" font-weight="400" fill="#94a3b8" letter-spacing="3">HOSPITAL MANAGEMENT SYSTEM  ·  REST API</text>
-    <g font-family="'Segoe UI', system-ui, sans-serif" font-size="12" font-weight="600">
-      <rect x="204" y="175" width="108" height="26" rx="13" fill="#14532d" opacity="0.5"/>
-      <rect x="204" y="175" width="108" height="26" rx="13" fill="none" stroke="#22c55e" stroke-width="0.8" opacity="0.7"/>
-      <circle cx="222" cy="188" r="4" fill="#22c55e" opacity="0.9"/>
-      <text x="232" y="193" fill="#86efac">Spring Boot 3.5</text>
-      <rect x="322" y="175" width="80" height="26" rx="13" fill="#312e81" opacity="0.5"/>
-      <rect x="322" y="175" width="80" height="26" rx="13" fill="none" stroke="#818cf8" stroke-width="0.8" opacity="0.7"/>
-      <circle cx="340" cy="188" r="4" fill="#818cf8" opacity="0.9"/>
-      <text x="350" y="193" fill="#c7d2fe">Java 21</text>
-      <rect x="412" y="175" width="72" height="26" rx="13" fill="#1e3a5f" opacity="0.6"/>
-      <rect x="412" y="175" width="72" height="26" rx="13" fill="none" stroke="#38bdf8" stroke-width="0.8" opacity="0.7"/>
-      <circle cx="430" cy="188" r="4" fill="#38bdf8" opacity="0.9"/>
-      <text x="440" y="193" fill="#7dd3fc">JWT Auth</text>
-      <rect x="494" y="175" width="76" height="26" rx="13" fill="#0c4a6e" opacity="0.5"/>
-      <rect x="494" y="175" width="76" height="26" rx="13" fill="none" stroke="#22d3ee" stroke-width="0.8" opacity="0.7"/>
-      <circle cx="512" cy="188" r="4" fill="#22d3ee" opacity="0.9"/>
-      <text x="522" y="193" fill="#67e8f9">MySQL 8</text>
-      <rect x="580" y="175" width="88" height="26" rx="13" fill="#451a03" opacity="0.5"/>
-      <rect x="580" y="175" width="88" height="26" rx="13" fill="none" stroke="#f59e0b" stroke-width="0.8" opacity="0.7"/>
-      <circle cx="598" cy="188" r="4" fill="#f59e0b" opacity="0.9"/>
-      <text x="608" y="193" fill="#fcd34d">Swagger UI</text>
-      <rect x="678" y="175" width="76" height="26" rx="13" fill="#4c0519" opacity="0.5"/>
-      <rect x="678" y="175" width="76" height="26" rx="13" fill="none" stroke="#f43f5e" stroke-width="0.8" opacity="0.7"/>
-      <circle cx="696" cy="188" r="4" fill="#f43f5e" opacity="0.9"/>
-      <text x="706" y="193" fill="#fda4af">Maven</text>
-    </g>
-    <text x="204" y="244" font-family="'Segoe UI', system-ui, sans-serif" font-size="12" fill="#475569" letter-spacing="1">Secure  ·  Modular  ·  Role-Based  ·  Enterprise-Grade</text>
-  </g>
-</svg>
+<p align="center">
+  <img src="medicloud-banner.svg" alt="MediCloud API Banner" width="100%"/>
+</p>
 
 <br/>
 
