@@ -2,7 +2,7 @@
 
 <!-- BANNER -->
 <p align="center">
-  <img src="medicloud-banner.svg" alt="MediCloud API Banner" width="100%"/>
+  <img src="medicloud_banner.svg" alt="MediCloud API Banner" width="100%"/>
 </p>
 
 <br/>
