@@ -7,7 +7,7 @@
 
 <br/>
 
-![License](https://img.shields.io/badge/license-MIT-blue?style=flat-square)
+
 ![Java](https://img.shields.io/badge/Java-21-orange?style=flat-square&logo=openjdk)
 ![Spring Boot](https://img.shields.io/badge/Spring_Boot-3.5.7-brightgreen?style=flat-square&logo=springboot)
 ![MySQL](https://img.shields.io/badge/MySQL-8.0-blue?style=flat-square&logo=mysql)
